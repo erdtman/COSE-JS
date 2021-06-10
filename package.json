@@ -43,7 +43,8 @@
     "any-promise": "^1.3.0",
     "cbor": "^3.0.3",
     "elliptic": "^6.4.0",
-    "node-hkdf-sync": "^1.0.0"
+    "node-hkdf-sync": "^1.0.0",
+    "node-rsa": "^1.1.1"
   },
   "devDependencies": {
     "ava": "*",
