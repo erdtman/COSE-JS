@@ -9,6 +9,52 @@ const base64url = require('base64url');
 const cbor = require('cbor');
 const deepEqual = require('./util.js').deepEqual;
 
+test('ecdsa-examples verify ecdsa-01', (t) => {
+  const example = jsonfile.readFileSync('test/Examples/ecdsa-examples/ecdsa-01.json');
+
+  const verifier = {
+    'key': {
+      'x': base64url.toBuffer(example.input.sign.signers[0].key.x),
+      'y': base64url.toBuffer(example.input.sign.signers[0].key.y),
+      'kid': example.input.sign.signers[0].key.kid
+    }
+  };
+
+  const signature = Buffer.from(example.output.cbor, 'hex');
+
+  return cose.sign.verify(
+    signature,
+    verifier)
+    .then((buf) => {
+      t.true(Buffer.isBuffer(buf));
+      t.true(buf.length > 0);
+      t.is(buf.toString('utf8'), example.input.plaintext);
+    });
+});
+
+test('ecdsa-examples verify ecdsa-02', (t) => {
+  const example = jsonfile.readFileSync('test/Examples/ecdsa-examples/ecdsa-02.json');
+
+  const verifier = {
+    'key': {
+      'x': base64url.toBuffer(example.input.sign.signers[0].key.x),
+      'y': base64url.toBuffer(example.input.sign.signers[0].key.y),
+      'kid': example.input.sign.signers[0].key.kid
+    }
+  };
+
+  const signature = Buffer.from(example.output.cbor, 'hex');
+
+  return cose.sign.verify(
+    signature,
+    verifier)
+    .then((buf) => {
+      t.true(Buffer.isBuffer(buf));
+      t.true(buf.length > 0);
+      t.is(buf.toString('utf8'), example.input.plaintext);
+    });
+});
+
 test('create ecdsa-01', (t) => {
   const example = jsonfile.readFileSync('test/Examples/sign-tests/ecdsa-01.json');
   const p = example.input.sign.protected;
